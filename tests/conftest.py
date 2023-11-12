@@ -27,8 +27,7 @@ def event_loop():
 async def async_page() -> None:
     async with async_playwright() as pw:
         browser = await pw.chromium.launch()
-        page = await browser.new_page()
-        yield page
+        yield await browser.new_page()
         await browser.close()
 
 
@@ -36,8 +35,7 @@ async def async_page() -> None:
 def sync_page() -> None:
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
-        page = browser.new_page()
-        yield page
+        yield browser.new_page()
         browser.close()
 
 

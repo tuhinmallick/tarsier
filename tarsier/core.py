@@ -32,7 +32,7 @@ class Tarsier(ITarsier):
         # TODO: scroll & stitch here, don't do viewport resizing
         script = "() => [window.innerWidth, window.innerHeight, document.documentElement.scrollHeight];"
         if isinstance(adapter, SeleniumAdapter):
-            script = f"return [window.innerWidth, window.innerHeight, document.documentElement.scrollHeight];"
+            script = "return [window.innerWidth, window.innerHeight, document.documentElement.scrollHeight];"
 
         default_width, default_height, content_height = await adapter.run_js(script)
 
@@ -44,8 +44,7 @@ class Tarsier(ITarsier):
 
     def _run_ocr(self, image: bytes) -> str:
         ocr_text = self._ocr_service.annotate(image)
-        page_text = self._ocr_service.format_text(ocr_text)
-        return page_text
+        return self._ocr_service.format_text(ocr_text)
 
     async def _tag_page(self, adapter: BrowserAdapter) -> Dict[int, str]:
         await adapter.run_js(self._js_utils)
