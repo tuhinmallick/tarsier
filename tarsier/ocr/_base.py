@@ -26,7 +26,7 @@ class OCRService(ABC):
 
         # find max line length
         max_line_length = max(
-            sum([len(token["text"]) + 1 for token in line])
+            sum(len(token["text"]) + 1 for token in line)
             for line in line_cluster.values()
         )
         canvas_width = max(canvas_width, max_line_length)
@@ -66,6 +66,4 @@ class OCRService(ABC):
         page_text = "\n".join("".join(row) for row in canvas)
         page_text = page_text.strip()
         page_text = "-" * canvas_width + "\n" + page_text + "\n" + "-" * canvas_width
-        page_text = page_text.replace("        ", "\t")
-
-        return page_text
+        return page_text.replace("        ", "\t")
